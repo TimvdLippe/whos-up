@@ -1,0 +1,110 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+
+<dom-module id="grocilist-login">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        height: 100%;
+      }
+      .image {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-image: url("https://d1fywv0iz2cv2w.cloudfront.net/videos/burpy-process.jpg");
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+        filter: blur(5px);
+      }
+      .card {
+        margin: auto;
+        background-color: white;
+        z-index: 2;
+        min-height: 175px;
+        height: 250px;
+        max-height: 50vh;
+        width: 50vw;
+        max-width: 450px;
+        --paper-card-header: {
+          text-align: center;
+        };
+      }
+      .card .heading {
+        padding: 16px;
+        font-size: 24px;
+        font-weight: 400;
+        color: var(--paper-card-header-color, #000);
+      }
+      button {
+        height: 50px;
+        margin: auto;
+        background-color: white;
+      }
+      .card-content > div {
+        display: flex;
+      }
+    </style>
+    <firebase-app auth-domain="grocilist.firebaseapp.com"
+      database-url="https://grocilist.firebaseio.com/"
+      api-key="AIzaSyB4Osy082oOyikvrDS6rzUB6zvs89IDt7w">
+    </firebase-app>
+    <firebase-auth id="auth" user="{{user}}" on-status-known-changed="_checkLogIn" provider="google">
+    </firebase-auth>
+
+    <div class="image"></div>
+    <div class="card" hidden$="[[!_initialized]]">
+      <div class="heading">
+        Keep track of your groceries in your home
+      </div>
+      <div class="card-content">
+        <div>
+          <button id="login" on-tap="_login">Log in with Google</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" hidden$="[[_initialized]]">
+      Loading, please wait...
+    </div>
+  </template>
+
+  <script>
+    class GrocilistLogin extends Polymer.Element {
+      static get is() {return 'grocilist-login';}
+      ready() {
+        super.ready();
+        this._initialized = false;
+        this.$.login.addEventListener('click', () => this._login());
+      }
+      _login() {
+        this.$.auth.signInWithPopup()
+          .then((r) => {
+            this._fireLogIn();
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+      _checkLogIn(e) {
+        if (e.detail.value) {
+          this._initialized = true;
+          if (this.user) {
+            this._fireLogIn();
+          }
+        }
+      }
+      _fireLogIn() {
+        this.dispatchEvent(new CustomEvent('logged-in'), {bubbles: true})
+      }
+    };
+
+    customElements.define(GrocilistLogin.is, GrocilistLogin);
+  </script>
+</dom-module>

@@ -1,0 +1,37 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="grocilist-login.html">
+<link rel="import" href="grocilist-account.html">
+
+<dom-module id="grocilist-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+        height: 100%;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+    <grocilist-login id="login" on-logged-in="_openGroceries" hidden$="[[_groceriesOpened]]"></grocilist-login>
+    <grocilist-account hidden$="[[!_groceriesOpened]]"></grocilist-account>
+  </template>
+  <script>
+    class GrocilistApp extends Polymer.Element {
+      static get is() {return 'grocilist-app';}
+      static get config() {
+        return {
+          properties: {
+            _groceriesOpened: Boolean
+          }
+        };
+      }
+      _openGroceries() {
+        this._groceriesOpened = true;
+        this.innerHTML = this._groceriesOpened;
+      }
+    };
+
+    customElements.define(GrocilistApp.is, GrocilistApp);
+  </script>
+</dom-module>

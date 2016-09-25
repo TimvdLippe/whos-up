@@ -1,0 +1,25 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+
+<dom-module id="grocilist-account">
+  <template>
+    <custom-style>
+      <style is="custom-style">
+        :host {
+          display: block;
+        }
+      </style>
+    </custom-style>
+
+    <paper-input label="Bla"></paper-input>
+    <input type="button" name="name" value="">
+  </template>
+  <script>
+    class GrocilistAccount extends Polymer.Element {
+      static get is() {return 'grocilist-account';}
+
+    }
+
+    customElements.define(GrocilistAccount.is, GrocilistAccount);
+  </script>
+</dom-module>
