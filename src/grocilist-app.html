@@ -1,4 +1,15 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/effects/waterfall.html">
+
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+
+
 <link rel="import" href="grocilist-login.html">
 <link rel="import" href="grocilist-account.html">
 
@@ -9,12 +20,38 @@
         display: block;
         height: 100%;
       }
-      [hidden] {
-        display: none !important;
+      
+      .header {
+        background: #00897B;
+        color: #FFFFFF;
+        font-family: "Roboto-bold", "Noto", sans-serif;
+        font-weight: 600;
+        padding: 0 10px;
       }
     </style>
-    <grocilist-login id="login" on-logged-in="_openGroceries" hidden$="[[_groceriesOpened]]"></grocilist-login>
-    <grocilist-account hidden$="[[!_groceriesOpened]]"></grocilist-account>
+
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <app-route route="{{route}}" pattern=":page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+
+    <app-header-layout fullbleed>
+      <app-header slot="header" fixed condenses effects="waterfall" class="header">
+        <app-toolbar>
+          <div main-title>
+            Who's up?
+          </div>
+        </app-toolbar>
+      </app-header>
+      <div class="main-content">
+        <!--TODO: When Tim has updated iron-lazy-pages, switch over-->
+        <iron-pages role="main" selected="[[routeData.page]]" attr-for-selected="name" fallback-selection="home">
+          <div name="home">HOMEPAGE</div>
+          <!--Login page-->
+          <grocilist-login id="login" name="login" on-logged-in="_redirectLogin"></grocilist-login>
+          <!--Account page-->
+          <grocilist-account name="account"></grocilist-account>
+        </iron-pages>
+      </div>
+    </app-header-layout>
   </template>
   <script>
     class GrocilistApp extends Polymer.Element {
@@ -22,13 +59,14 @@
       static get config() {
         return {
           properties: {
-            _groceriesOpened: Boolean
+            route: Object,
+            routeData: String
           }
         };
       }
-      _openGroceries() {
-        this._groceriesOpened = true;
-        this.innerHTML = this._groceriesOpened;
+
+      _redirectLogin() {
+        this.set("route.path", "account");
       }
     };
 
