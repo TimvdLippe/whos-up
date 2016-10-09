@@ -1,5 +1,5 @@
 {
-  "name": "grocilist",
+  "name": "Who's up",
   "description": "PWA to keep track of groceries in a shared house",
   "main": "index.html",
   "dependencies": {

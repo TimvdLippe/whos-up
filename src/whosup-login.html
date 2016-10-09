@@ -5,7 +5,7 @@
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
 
-<dom-module id="grocilist-login">
+<dom-module id="whosup-login">
   <template>
     <style>
       :host {
@@ -76,8 +76,8 @@
   </template>
 
   <script>
-    class GrocilistLogin extends Polymer.Element {
-      static get is() {return 'grocilist-login';}
+    class WhosupLogin extends Polymer.Element {
+      static get is() {return 'whosup-login';}
       ready() {
         super.ready();
         this._initialized = false;
@@ -105,6 +105,6 @@
       }
     };
 
-    customElements.define(GrocilistLogin.is, GrocilistLogin);
+    customElements.define(WhosupLogin.is, WhosupLogin);
   </script>
 </dom-module>

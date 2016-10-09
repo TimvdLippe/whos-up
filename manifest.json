@@ -1,6 +1,6 @@
 {
-  "name": "grocilist",
-  "short_name": "grocilist",
+  "name": "Who's up",
+  "short_name": "Who's up",
   "description": "PWA to keep track of groceries in a shared house",
   "start_url": "/",
   "display": "standalone"
