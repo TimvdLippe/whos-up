@@ -1,6 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 
+<link rel="import" href="login-behaviour.html">
+
 <dom-module id="whosup-account">
   <template>
     <custom-style>
@@ -15,9 +17,8 @@
     <input type="button" name="name" value="">
   </template>
   <script>
-    class WhosupAccount extends Polymer.Element {
+    class WhosupAccount extends LoginBehaviour(Polymer.Element) {
       static get is() {return 'whosup-account';}
-
     }
 
     customElements.define(WhosupAccount.is, WhosupAccount);

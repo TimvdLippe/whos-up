@@ -1,0 +1,42 @@
+<script>
+let subscribers = [];
+let user;
+
+let LoginBehaviour = (superClass) => class extends superClass {
+  static get config() {
+    return {
+      user: Object
+    }
+  }
+
+  /**
+   * Update the user object for all subscribers.
+   * @param newUser: the new user object to sync to all subscribers.
+   */
+  setUser(newUser) {
+    user = newUser;
+    for (var i=0,l=subscribers.length;i<l;i++) {
+        subscribers[i].user = newUser;
+    }
+  }
+
+  /**
+   * On creation of elements using this mixin, register them as a subscriber.
+   */
+  connectedCallback() {
+    subscribers.push(this);
+    this.user = user;
+  }
+
+  /**
+   * On destruction of the subscriber, 
+   * remove it from the subscriber array to prevent unneeded attempts to sync.
+   */
+  disconnectedCallback() {
+    var index = subscribers.indexOf(this);
+    if (index >= 0) {
+      subscribers.splice(index, 1);
+    }
+  }
+};
+</script>

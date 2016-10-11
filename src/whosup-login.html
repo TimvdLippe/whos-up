@@ -4,6 +4,7 @@
 <link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="login-behaviour.html">
 
 <dom-module id="whosup-login">
   <template>
@@ -76,7 +77,7 @@
   </template>
 
   <script>
-    class WhosupLogin extends Polymer.Element {
+    class WhosupLogin extends LoginBehaviour(Polymer.Element) {
       static get is() {return 'whosup-login';}
       ready() {
         super.ready();
@@ -96,6 +97,7 @@
         if (e.detail.value) {
           this._initialized = true;
           if (this.user) {
+            this.setUser(this.user);
             this._fireLogIn();
           }
         }
