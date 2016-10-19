@@ -10,17 +10,17 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 
 
-<link rel="import" href="grocilist-login.html">
-<link rel="import" href="grocilist-account.html">
+<link rel="import" href="whosup-login.html">
+<link rel="import" href="whosup-account.html">
 
-<dom-module id="grocilist-app">
+<dom-module id="whosup-app">
   <template>
     <style>
       :host {
         display: block;
         height: 100%;
       }
-      
+
       .header {
         background: #00897B;
         color: #FFFFFF;
@@ -30,8 +30,8 @@
       }
     </style>
 
-    <app-location route="{{route}}" use-hash-as-path></app-location>
-    <app-route route="{{route}}" pattern=":page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+    <app-location route="{{route}}"></app-location>
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
     <app-header-layout fullbleed>
       <app-header slot="header" fixed condenses effects="waterfall" class="header">
@@ -46,16 +46,16 @@
         <iron-pages role="main" selected="[[routeData.page]]" attr-for-selected="name" fallback-selection="home">
           <div name="home">HOMEPAGE</div>
           <!--Login page-->
-          <grocilist-login id="login" name="login" on-logged-in="_redirectLogin"></grocilist-login>
+          <whosup-login id="login" name="login" on-logged-in="_redirectLogin"></whosup-login>
           <!--Account page-->
-          <grocilist-account name="account"></grocilist-account>
+          <whosup-account name="account"></whosup-account>
         </iron-pages>
       </div>
     </app-header-layout>
   </template>
   <script>
-    class GrocilistApp extends Polymer.Element {
-      static get is() {return 'grocilist-app';}
+    class WhosupApp extends Polymer.Element {
+      static get is() {return 'whosup-app';}
       static get config() {
         return {
           properties: {
@@ -70,6 +70,6 @@
       }
     };
 
-    customElements.define(GrocilistApp.is, GrocilistApp);
+    customElements.define(WhosupApp.is, WhosupApp);
   </script>
 </dom-module>
